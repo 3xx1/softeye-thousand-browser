@@ -1,1 +1,0 @@
-# softeye-thousand-browser
