@@ -1,4 +1,4 @@
-var container, stats;
+var container, stats, template;
 var camera, scene, renderer;
 
 var raycaster;
@@ -34,6 +34,9 @@ function init() {
 	info.style.width = '100%';
 	info.style.textAlign = 'center';
 	container.appendChild( info );
+
+	template = document.createElement( 'div' );
+	document.body.appendChild( template );
 
 	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.set( 0, 300, 500 );
@@ -77,7 +80,16 @@ function onWindowResize() {
 }
 
 function onDocumentClick() {
-  console.log(INTERSECTED.material.id);
+	 if (INTERSECTED !== null) {
+	  console.log(INTERSECTED.material.id);
+		$.ajax({
+			url: 'http://1000ya.isis.ne.jp/' + fourDigitsString(INTERSECTED.material.id) + '.html',
+			type: 'GET',
+			success: function(data) {
+				console.log(data);
+			}
+		});
+	 }
 }
 
 function onDocumentMouseMove( event ) {
@@ -119,4 +131,18 @@ function render() {
   }
 
 	renderer.render( scene, camera );
+}
+
+function fourDigitsString(value) {
+	if( value > 999) {
+		return String(value);
+	} else if ( value > 99) {
+		return "0" + String(value);
+	} else if ( value > 9 ) {
+		return "00" + String(value);
+	} else if ( value > 0 ) {
+		return "000" + String(value);
+	} else {
+		return;
+	}
 }
