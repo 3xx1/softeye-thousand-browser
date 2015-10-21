@@ -40,16 +40,15 @@ function init() {
 
 	scene = new THREE.Scene();
 
-	for ( var i = 0; i < 100; i ++ ) {
+	for ( var i = 0; i < 1500; i ++ ) {
 		var particle = new THREE.Sprite( new THREE.SpriteCanvasMaterial( { color: Math.random() * 0x808080 + 0x808080, program: programStroke } ) );
+    // particle.id = i;
 		particle.position.x = Math.random() * 800 - 400;
 		particle.position.y = Math.random() * 800 - 400;
 		particle.position.z = Math.random() * 800 - 400;
 		particle.scale.x = particle.scale.y = Math.random() * 20 + 20;
 		scene.add( particle );
   }
-
-				//
 
 	raycaster = new THREE.Raycaster();
 	mouse = new THREE.Vector2();
@@ -66,6 +65,7 @@ function init() {
 	container.appendChild( stats.domElement );
 
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+  document.addEventListener( 'click', onDocumentClick, false );
 	window.addEventListener( 'resize', onWindowResize, false );
 }
 
@@ -74,6 +74,10 @@ function onWindowResize() {
 	camera.updateProjectionMatrix();
 
 	renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+function onDocumentClick() {
+  console.log(INTERSECTED.material.id);
 }
 
 function onDocumentMouseMove( event ) {
@@ -88,11 +92,11 @@ function animate() {
 	stats.update();
 }
 
-var radius = 600;
+var radius = 1000;
 var theta = 0;
 
 function render() {
-	theta += 0.1;
+	theta += 0.03;
   camera.position.x = radius * Math.sin( THREE.Math.degToRad( theta ) );
 	camera.position.y = radius * Math.sin( THREE.Math.degToRad( theta ) );
 	camera.position.z = radius * Math.cos( THREE.Math.degToRad( theta ) );
