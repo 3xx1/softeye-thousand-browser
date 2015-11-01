@@ -85,8 +85,11 @@ function onDocumentClick() {
 		$.ajax({
 			url: 'http://1000ya.isis.ne.jp/' + fourDigitsString(INTERSECTED.material.id) + '.html',
 			type: 'GET',
+			dataType: 'html',
 			success: function(data) {
-				console.log(data);
+				$('#sample').append(data.responseText);
+				// console.log($('.entry-content')[0]);
+				$('#contents').append($('.entry-content')[0]);
 			}
 		});
 	 }
